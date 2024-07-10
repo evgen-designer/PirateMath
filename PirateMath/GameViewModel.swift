@@ -15,6 +15,13 @@ class GameViewModel: ObservableObject {
     @Published var userAnswer = ""
     @Published var score = 0
     @Published var gameOver = false
+    @Published var answerStatus: AnswerStatus = .neutral
+    @Published var selectedTable: Int? = nil
+    @Published var showStopGameAlert = false
+    
+    enum AnswerStatus {
+        case neutral, correct, incorrect
+    }
     
     func toggleTable(_ table: Int) {
         if selectedTables.contains(table) {
@@ -24,25 +31,49 @@ class GameViewModel: ObservableObject {
         }
     }
     
-    func generateQuestions() {
-        questions = []
-        for _ in 0..<numberOfQuestions {
-            let table = selectedTables.randomElement() ?? 1
-            let multiplier = Int.random(in: 1...12)
-            let question = Question(text: "What is \(table) x \(multiplier)?", answer: table * multiplier)
-            questions.append(question)
+    func selectTable(_ table: Int) {
+        if selectedTable == table {
+            selectedTable = nil
+        } else {
+            selectedTable = table
         }
-        currentQuestionIndex = 0
-        score = 0
-        gameOver = false
     }
     
+    var isStartGameDisabled: Bool {
+        return selectedTable == nil
+    }
+    
+    func generateQuestions() {
+            guard let selectedTable = selectedTable else {
+                print("No table selected")
+                return
+            }
+            
+            questions = []
+            for _ in 0..<numberOfQuestions {
+                let multiplier = Int.random(in: 1...12)
+                let question = Question(text: "What is \(selectedTable) x \(multiplier)?", answer: selectedTable * multiplier)
+                questions.append(question)
+            }
+            currentQuestionIndex = 0
+            score = 0
+            gameOver = false
+        }
+    
     func checkAnswer() {
-        guard currentQuestionIndex < questions.count else { return }
+        guard currentQuestionIndex < questions.count, !userAnswer.isEmpty else { return }
         if Int(userAnswer) == questions[currentQuestionIndex].answer {
             score += 1
+            answerStatus = .correct
+        } else {
+            answerStatus = .incorrect
         }
-        nextQuestion()
+        
+        // Reset answer status after a delay
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.answerStatus = .neutral
+            self.nextQuestion()
+        }
     }
     
     func nextQuestion() {
@@ -52,4 +83,13 @@ class GameViewModel: ObservableObject {
             gameOver = true
         }
     }
+    
+    func stopGame() {
+            questions = []
+            currentQuestionIndex = 0
+            userAnswer = ""
+            score = 0
+            gameOver = false
+            selectedTable = nil
+        }
 }
