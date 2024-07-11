@@ -106,17 +106,15 @@ struct ContentView: View {
                 Spacer()
                 
                 HStack(spacing: 10) {
-                    // Green circle for correct answers
                     ZStack {
                         Circle()
-                            .fill(Color.green)
+                            .fill(Color.mint)
                             .frame(width: 30, height: 30)
                         Text("\(viewModel.score)")
                             .foregroundColor(.white)
                             .font(.system(size: 14, weight: .bold))
                     }
                     
-                    // Red circle for incorrect answers
                     ZStack {
                         Circle()
                             .fill(Color.red)
@@ -181,7 +179,7 @@ struct ContentView: View {
         case .neutral:
             return Color.white.opacity(0.4)
         case .correct:
-            return Color.green
+            return Color.mint
         case .incorrect:
             return Color.red
         }
@@ -220,13 +218,14 @@ struct ContentView: View {
                     .cornerRadius(10)
                 }
                 
-                Button("Play Again") {
+                Button("PLAY AGAIN") {
                     viewModel.resetGame()
                 }
                 .font(.title3.bold())
-                .foregroundColor(.white)
+                .frame(minWidth: 200)
                 .padding()
-                .background(Color.green)
+                .background(Color.mint)
+                .foregroundColor(.white)
                 .cornerRadius(10)
                 .padding(.top)
             }

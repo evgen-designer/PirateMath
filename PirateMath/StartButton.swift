@@ -21,7 +21,7 @@ struct StartButton: View {
                 .font(.title3.bold())
                 .frame(minWidth: 200)
                 .padding()
-                .background(Color.green)
+                .background(Color.mint)
                 .foregroundColor(.white)
                 .cornerRadius(10)
         }
