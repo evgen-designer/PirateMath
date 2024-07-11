@@ -29,6 +29,7 @@ struct ContentView: View {
                     endPoint: .bottomTrailing
                 )
                 .ignoresSafeArea()
+                
                 VStack {
                     if viewModel.questions.isEmpty {
                         setupView
@@ -95,38 +96,6 @@ struct ContentView: View {
     
     var gameView: some View {
         VStack {
-            HStack {
-                Button(action: {
-                    viewModel.showStopGameAlert = true
-                }) {
-                    Text("Exit game")
-                        .foregroundColor(.white)
-                }
-                
-                Spacer()
-                
-                HStack(spacing: 10) {
-                    ZStack {
-                        Circle()
-                            .fill(Color.mint)
-                            .frame(width: 30, height: 30)
-                        Text("\(viewModel.score)")
-                            .foregroundColor(.white)
-                            .font(.system(size: 14, weight: .bold))
-                    }
-                    
-                    ZStack {
-                        Circle()
-                            .fill(Color.red)
-                            .frame(width: 30, height: 30)
-                        Text("\(viewModel.incorrectScore)")
-                            .foregroundColor(.white)
-                            .font(.system(size: 14, weight: .bold))
-                    }
-                }
-            }
-            .padding()
-            
             ZStack {
                 RoundedRectangle(cornerRadius: 30)
                     .stroke(Color.white.opacity(0.5), lineWidth: 1)
@@ -158,10 +127,45 @@ struct ContentView: View {
             NumberPad(enteredAmount: $viewModel.userAnswer) {
                 viewModel.checkAnswer()
             }
+            .padding(.bottom)
+            
+            Divider().background(Color.white)
             
             Spacer()
+            
+            HStack {
+                Button(action: {
+                    viewModel.showStopGameAlert = true
+                }) {
+                    Text("Exit game")
+                        .foregroundColor(.white)
+                }
+                
+                Spacer()
+                
+                HStack(spacing: 10) {
+                    ZStack {
+                        Circle()
+                            .fill(Color.mint)
+                            .frame(width: 30, height: 30)
+                        Text("\(viewModel.score)")
+                            .foregroundColor(.white)
+                            .font(.system(size: 14, weight: .bold))
+                    }
+                    
+                    ZStack {
+                        Circle()
+                            .fill(Color.red)
+                            .frame(width: 30, height: 30)
+                        Text("\(viewModel.incorrectScore)")
+                            .foregroundColor(.white)
+                            .font(.system(size: 14, weight: .bold))
+                    }
+                }
+            }
+            .padding(.top)
+            .padding(.horizontal, 30)
         }
-        .padding()
         .alert(isPresented: $viewModel.showStopGameAlert) {
             Alert(
                 title: Text("Exit game"),
@@ -194,8 +198,15 @@ struct ContentView: View {
                         .foregroundColor(.white)
                     
                     Text("Your score: \(viewModel.score) / \(viewModel.questions.count)")
-                        .font(.title2)
-                        .foregroundColor(.white)
+                        .font(.body.bold())
+                        .foregroundColor(.black)
+                        .padding()
+                        .frame(width: 200, height: 50)
+                        .background(backgroundColor)
+                        .cornerRadius(10)
+                    
+                    Divider()
+                        .background(Color.white)
                     
                     ForEach(viewModel.questions) { question in
                         HStack {
@@ -208,7 +219,19 @@ struct ContentView: View {
                                 Text("Your answer: \(userAnswer)")
                                     .foregroundColor(.white)
                                 
-                                Text(question.isCorrect ? "✅" : "❌")
+                                Rectangle()
+                                    .frame(width: 1)
+                                    .foregroundColor(Color.white.opacity(0.25))
+                                    .padding(.horizontal, 4)
+                                
+                                ZStack {
+                                    Circle()
+                                        .fill(question.isCorrect ? Color.mint : Color.red)
+                                        .frame(width: 24, height: 24)
+                                    Image(systemName: question.isCorrect ? "checkmark" : "xmark")
+                                        .foregroundColor(.white)
+                                        .font(.system(size: 14, weight: .bold))
+                                }
                             } else {
                                 Text("Unanswered")
                                     .foregroundColor(.yellow)
@@ -219,7 +242,6 @@ struct ContentView: View {
                         .cornerRadius(10)
                     }
                     
-                    // Add some padding at the bottom to ensure content isn't hidden behind the button
                     Spacer().frame(height: 70)
                 }
                 .padding()
@@ -229,7 +251,7 @@ struct ContentView: View {
                 viewModel.resetGame()
             }) {
                 Text("PLAY AGAIN")
-                    .font(.headline)
+                    .font(.title3.bold())
                     .foregroundColor(.white)
                     .padding()
                     .frame(minWidth: 200)
