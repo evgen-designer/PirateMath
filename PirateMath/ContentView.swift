@@ -99,14 +99,33 @@ struct ContentView: View {
                 Button(action: {
                     viewModel.showStopGameAlert = true
                 }) {
-                    Text("Stop game")
+                    Text("Exit game")
                         .foregroundColor(.white)
                 }
                 
                 Spacer()
                 
-                Text("Score: \(viewModel.score)")
-                    .foregroundColor(.white)
+                HStack(spacing: 10) {
+                    // Green circle for correct answers
+                    ZStack {
+                        Circle()
+                            .fill(Color.green)
+                            .frame(width: 30, height: 30)
+                        Text("\(viewModel.score)")
+                            .foregroundColor(.white)
+                            .font(.system(size: 14, weight: .bold))
+                    }
+                    
+                    // Red circle for incorrect answers
+                    ZStack {
+                        Circle()
+                            .fill(Color.red)
+                            .frame(width: 30, height: 30)
+                        Text("\(viewModel.questions.count - viewModel.score)")
+                            .foregroundColor(.white)
+                            .font(.system(size: 14, weight: .bold))
+                    }
+                }
             }
             .padding()
             
@@ -147,8 +166,8 @@ struct ContentView: View {
         .padding()
         .alert(isPresented: $viewModel.showStopGameAlert) {
             Alert(
-                title: Text("Stop Game"),
-                message: Text("Are you sure you want to stop the game?"),
+                title: Text("Exit game"),
+                message: Text("Are you sure you want to stop the game and exit?"),
                 primaryButton: .destructive(Text("Yes")) {
                     viewModel.stopGame()
                 },
