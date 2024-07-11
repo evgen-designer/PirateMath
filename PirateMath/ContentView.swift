@@ -188,14 +188,49 @@ struct ContentView: View {
     }
     
     var gameOverView: some View {
-        VStack(spacing: 20) {
-            Text("Game Over!")
-                .font(.title)
-            Text("Your score: \(viewModel.score) / \(viewModel.questions.count)")
-            
-            Button("Play Again") {
-                viewModel.questions = []
+        ScrollView {
+            VStack(spacing: 20) {
+                Text("Game over!")
+                    .font(.title)
+                    .foregroundColor(.white)
+                
+                Text("Your score: \(viewModel.score) / \(viewModel.questions.count)")
+                    .font(.title2)
+                    .foregroundColor(.white)
+                
+                ForEach(viewModel.questions) { question in
+                    HStack {
+                        Text(question.text)
+                            .foregroundColor(.white)
+                        
+                        Spacer()
+                        
+                        if let userAnswer = question.userAnswer {
+                            Text("\(userAnswer)")
+                                .foregroundColor(.white)
+                            
+                            Text(question.isCorrect ? "✅" : "❌")
+                        } else {
+                            Text("Unanswered")
+                                .foregroundColor(.yellow)
+                        }
+                    }
+                    .padding()
+                    .background(Color.white.opacity(0.2))
+                    .cornerRadius(10)
+                }
+                
+                Button("Play Again") {
+                    viewModel.resetGame()
+                }
+                .font(.title3.bold())
+                .foregroundColor(.white)
+                .padding()
+                .background(Color.green)
+                .cornerRadius(10)
+                .padding(.top)
             }
+            .padding()
         }
     }
 }

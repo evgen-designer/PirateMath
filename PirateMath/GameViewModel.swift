@@ -64,6 +64,7 @@ class GameViewModel: ObservableObject {
     
     func checkAnswer() {
         guard currentQuestionIndex < questions.count, !userAnswer.isEmpty else { return }
+            questions[currentQuestionIndex].userAnswer = Int(userAnswer)
         if Int(userAnswer) == questions[currentQuestionIndex].answer {
             score += 1
             answerStatus = .correct
@@ -96,4 +97,14 @@ class GameViewModel: ObservableObject {
             gameOver = false
             selectedTable = nil
         }
+    
+    func resetGame() {
+        questions = []
+        currentQuestionIndex = 0
+        userAnswer = ""
+        score = 0
+        incorrectScore = 0
+        gameOver = false
+        selectedTable = nil
+    }
 }

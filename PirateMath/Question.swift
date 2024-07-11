@@ -11,4 +11,9 @@ struct Question: Identifiable {
     let id = UUID()
     let text: String
     let answer: Int
+    var userAnswer: Int?
+    
+    var isCorrect: Bool {
+        userAnswer == answer
+    }
 }
