@@ -186,50 +186,58 @@ struct ContentView: View {
     }
     
     var gameOverView: some View {
-        ScrollView {
-            VStack(spacing: 20) {
-                Text("Game over!")
-                    .font(.title)
-                    .foregroundColor(.white)
-                
-                Text("Your score: \(viewModel.score) / \(viewModel.questions.count)")
-                    .font(.title2)
-                    .foregroundColor(.white)
-                
-                ForEach(viewModel.questions) { question in
-                    HStack {
-                        Text(question.text)
-                            .foregroundColor(.white)
-                        
-                        Spacer()
-                        
-                        if let userAnswer = question.userAnswer {
-                            Text("\(userAnswer)")
+        ZStack(alignment: .bottom) {
+            ScrollView {
+                VStack(spacing: 20) {
+                    Text("Game over!")
+                        .font(.title)
+                        .foregroundColor(.white)
+                    
+                    Text("Your score: \(viewModel.score) / \(viewModel.questions.count)")
+                        .font(.title2)
+                        .foregroundColor(.white)
+                    
+                    ForEach(viewModel.questions) { question in
+                        HStack {
+                            Text(question.text)
                                 .foregroundColor(.white)
                             
-                            Text(question.isCorrect ? "✅" : "❌")
-                        } else {
-                            Text("Unanswered")
-                                .foregroundColor(.yellow)
+                            Spacer()
+                            
+                            if let userAnswer = question.userAnswer {
+                                Text("Your answer: \(userAnswer)")
+                                    .foregroundColor(.white)
+                                
+                                Text(question.isCorrect ? "✅" : "❌")
+                            } else {
+                                Text("Unanswered")
+                                    .foregroundColor(.yellow)
+                            }
                         }
+                        .padding()
+                        .background(Color.white.opacity(0.2))
+                        .cornerRadius(10)
                     }
-                    .padding()
-                    .background(Color.white.opacity(0.2))
-                    .cornerRadius(10)
+                    
+                    // Add some padding at the bottom to ensure content isn't hidden behind the button
+                    Spacer().frame(height: 70)
                 }
-                
-                Button("PLAY AGAIN") {
-                    viewModel.resetGame()
-                }
-                .font(.title3.bold())
-                .frame(minWidth: 200)
                 .padding()
-                .background(Color.mint)
-                .foregroundColor(.white)
-                .cornerRadius(10)
-                .padding(.top)
             }
-            .padding()
+            
+            Button(action: {
+                viewModel.resetGame()
+            }) {
+                Text("PLAY AGAIN")
+                    .font(.headline)
+                    .foregroundColor(.white)
+                    .padding()
+                    .frame(minWidth: 200)
+                    .background(Color.mint)
+                    .cornerRadius(10)
+            }
+            .padding(.horizontal)
+            .padding(.bottom, 20)
         }
     }
 }
