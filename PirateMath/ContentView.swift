@@ -31,6 +31,25 @@ struct ContentView: View {
                 .ignoresSafeArea()
                 
                 VStack {
+                    Circle()
+                        .fill(
+                            RadialGradient(
+                                gradient: Gradient(colors: [.red, .blue, .mint, .yellow]),
+                                center: .center,
+                                startRadius: 50,
+                                endRadius: 150
+                            )
+                        )
+                        .frame(width: 400, height: 400)
+                        .blur(radius: 30)
+                        .opacity(0.3)
+                    
+                    .offset(y: -80)
+                    
+                    Spacer()
+                }
+                
+                VStack {
                     if viewModel.questions.isEmpty {
                         setupView
                     } else if !viewModel.gameOver {
