@@ -17,6 +17,7 @@
 		0470CB6B2C3EB5330024CEB6 /* CustomGridButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0470CB6A2C3EB5330024CEB6 /* CustomGridButton.swift */; };
 		0470CB6D2C3EB55A0024CEB6 /* CustomSegmentedPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0470CB6C2C3EB55A0024CEB6 /* CustomSegmentedPicker.swift */; };
 		0470CB6F2C3EB57E0024CEB6 /* NumberPad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0470CB6E2C3EB57E0024CEB6 /* NumberPad.swift */; };
+		0470CB9B2C4079720024CEB6 /* SpinCoin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0470CB9A2C4079720024CEB6 /* SpinCoin.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +32,7 @@
 		0470CB6A2C3EB5330024CEB6 /* CustomGridButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomGridButton.swift; sourceTree = "<group>"; };
 		0470CB6C2C3EB55A0024CEB6 /* CustomSegmentedPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSegmentedPicker.swift; sourceTree = "<group>"; };
 		0470CB6E2C3EB57E0024CEB6 /* NumberPad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberPad.swift; sourceTree = "<group>"; };
+		0470CB9A2C4079720024CEB6 /* SpinCoin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinCoin.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,6 +67,7 @@
 			children = (
 				0470CB562C3EB07E0024CEB6 /* PirateMathApp.swift */,
 				0470CB582C3EB07E0024CEB6 /* ContentView.swift */,
+				0470CB9A2C4079720024CEB6 /* SpinCoin.swift */,
 				0470CB6A2C3EB5330024CEB6 /* CustomGridButton.swift */,
 				0470CB6C2C3EB55A0024CEB6 /* CustomSegmentedPicker.swift */,
 				0470CB6E2C3EB57E0024CEB6 /* NumberPad.swift */,
@@ -155,6 +158,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0470CB9B2C4079720024CEB6 /* SpinCoin.swift in Sources */,
 				0470CB6F2C3EB57E0024CEB6 /* NumberPad.swift in Sources */,
 				0470CB6B2C3EB5330024CEB6 /* CustomGridButton.swift in Sources */,
 				0470CB652C3EB3590024CEB6 /* GameViewModel.swift in Sources */,

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     @StateObject private var viewModel = GameViewModel()
+    @State private var showPerfectScorePopup = false
     
     let images = [
         "01", "02", "03", "04", "05", "06",
@@ -44,7 +45,7 @@ struct ContentView: View {
                         .blur(radius: 30)
                         .opacity(0.3)
                     
-                    .offset(y: -40)
+                        .offset(y: -40)
                     
                     Spacer()
                 }
@@ -280,6 +281,74 @@ struct ContentView: View {
             .padding(.horizontal)
             .padding(.bottom, 20)
         }
+        .onAppear {
+            if viewModel.score == viewModel.questions.count {
+                withAnimation(.easeInOut) {
+                    showPerfectScorePopup = true
+                }
+            }
+        }
+        .overlay(
+            Group {
+                if showPerfectScorePopup {
+                    perfectScorePopup
+                        .animation(.easeInOut, value: showPerfectScorePopup)
+                }
+            }
+        )
+    }
+    
+    var perfectScorePopup: some View {
+        ZStack {
+            Color.black.opacity(0.4)
+                .edgesIgnoringSafeArea(.all)
+            
+            VStack(spacing: 20) {
+                ZStack {
+                    Circle()
+                        .fill(
+                            RadialGradient(
+                                gradient: Gradient(colors: [.yellow, .orange]),
+                                center: .center,
+                                startRadius: 0,
+                                endRadius: 100
+                            )
+                        )
+                        .frame(width: 200, height: 200)
+                    
+                    Image(systemName: "star.fill")
+                        .resizable()
+                        .scaledToFit()
+                        .foregroundColor(.white)
+                        .frame(width: 100, height: 100)
+                }
+                
+                Text("Perfect Score!")
+                    .font(.title.bold())
+                    .foregroundColor(.white)
+                
+                Text("Congratulations! You answered all questions correctly!")
+                    .multilineTextAlignment(.center)
+                    .foregroundColor(.white)
+                
+                Button(action: {
+                    showPerfectScorePopup = false
+                }) {
+                    Text("OK")
+                        .font(.title3.bold())
+                        .foregroundColor(.white)
+                        .padding()
+                        .frame(minWidth: 100)
+                        .background(Color.mint)
+                        .cornerRadius(10)
+                }
+            }
+            .padding()
+            .background(Color.indigo)
+            .cornerRadius(20)
+            .padding(40)
+        }
+        .transition(.opacity)
     }
 }
 
