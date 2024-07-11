@@ -58,7 +58,7 @@ struct ContentView: View {
                     
                     CustomSegmentedPicker(
                         selection: $viewModel.numberOfQuestions,
-                        options: [("5", 5), ("10", 10), ("20", 20)],
+                        options: [("5", 5), ("10", 10), ("15", 15)],
                         chosenTextColor: .black,
                         chosenBackgroundColor: .white.opacity(0.7),
                         unchosenTextColor: .white,
@@ -121,7 +121,7 @@ struct ContentView: View {
                         Circle()
                             .fill(Color.red)
                             .frame(width: 30, height: 30)
-                        Text("\(viewModel.questions.count - viewModel.score)")
+                        Text("\(viewModel.incorrectScore)")
                             .foregroundColor(.white)
                             .font(.system(size: 14, weight: .bold))
                     }

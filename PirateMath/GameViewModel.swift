@@ -14,6 +14,7 @@ class GameViewModel: ObservableObject {
     @Published var currentQuestionIndex = 0
     @Published var userAnswer = ""
     @Published var score = 0
+    @Published var incorrectScore = 0
     @Published var gameOver = false
     @Published var answerStatus: AnswerStatus = .neutral
     @Published var selectedTable: Int? = nil
@@ -57,6 +58,7 @@ class GameViewModel: ObservableObject {
             }
             currentQuestionIndex = 0
             score = 0
+            incorrectScore = 0
             gameOver = false
         }
     
@@ -66,6 +68,7 @@ class GameViewModel: ObservableObject {
             score += 1
             answerStatus = .correct
         } else {
+            incorrectScore += 1
             answerStatus = .incorrect
         }
         
@@ -89,6 +92,7 @@ class GameViewModel: ObservableObject {
             currentQuestionIndex = 0
             userAnswer = ""
             score = 0
+            incorrectScore = 0
             gameOver = false
             selectedTable = nil
         }
