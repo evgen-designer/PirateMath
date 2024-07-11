@@ -51,14 +51,24 @@ class GameViewModel: ObservableObject {
             }
             
             questions = []
-            for _ in 0..<numberOfQuestions {
-                let multiplier = Int.random(in: 1...12)
+            var usedMultipliers = Set<Int>()
+            
+            while questions.count < numberOfQuestions {
+                let availableMultipliers = Set(1...15).subtracting(usedMultipliers)
+                
+                if availableMultipliers.isEmpty {
+                    break
+                }
+                
+                let multiplier = availableMultipliers.randomElement()!
+                usedMultipliers.insert(multiplier)
+                
                 let question = Question(text: "What is \(selectedTable) x \(multiplier)?", answer: selectedTable * multiplier)
                 questions.append(question)
             }
+            
             currentQuestionIndex = 0
             score = 0
-            incorrectScore = 0
             gameOver = false
         }
     
@@ -73,7 +83,6 @@ class GameViewModel: ObservableObject {
             answerStatus = .incorrect
         }
         
-        // Reset answer status after a delay
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             self.answerStatus = .neutral
             self.nextQuestion()
