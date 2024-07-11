@@ -40,11 +40,11 @@ struct ContentView: View {
                                 endRadius: 150
                             )
                         )
-                        .frame(width: 400, height: 400)
+                        .frame(width: 300, height: 300)
                         .blur(radius: 30)
                         .opacity(0.3)
                     
-                    .offset(y: -80)
+                    .offset(y: -40)
                     
                     Spacer()
                 }
