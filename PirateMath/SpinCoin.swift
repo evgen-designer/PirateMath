@@ -13,68 +13,44 @@ struct SpinCoin: View {
     @State private var showsFront = true
     @State private var showResult = false
     @State private var isWin = false
+    @State private var hasSpun = false
     
     var body: some View {
         ZStack {
-            LinearGradient(
-                colors: [.indigo, .purple],
-                startPoint: .topLeading,
-                endPoint: .bottomTrailing
-            )
-            .ignoresSafeArea()
+            Circle()
+                .fill(
+                    RadialGradient(
+                        gradient: Gradient(colors: [.red, .blue, .green, .yellow]),
+                        center: .center,
+                        startRadius: 50,
+                        endRadius: 150
+                    )
+                )
+                .frame(width: 200, height: 200)
+                .blur(radius: 30)
             
-            VStack {
-                Spacer()
-                
+            VStack(spacing: -10) {
                 ZStack {
-                    Circle()
-                        .fill(
-                            RadialGradient(
-                                gradient: Gradient(colors: [.red, .blue, .green, .yellow]),
-                                center: .center,
-                                startRadius: 50,
-                                endRadius: 150
-                            )
-                        )
-                        .frame(width: 200, height: 200)
-                        .blur(radius: 30)
-                    
-                    VStack(spacing: -10) {
-                        VStack {
-                            Text("TAP COIN")
-                                .font(.system(size: 48, weight: .bold))
-                                .foregroundColor(.white)
-                            Text("TO SPIN")
-                                .font(.system(size: 24, weight: .bold))
-                                .foregroundColor(.yellow)
-                        }
-                        
-                        ZStack {
-                            CoinView(rotationDegrees: $rotationDegrees, showsFront: $showsFront)
-                                .padding(50)
-                                .onTapGesture {
-                                    if !isSpinning {
-                                        spinCoin()
-                                    }
-                                }
-                            
-                            if showResult {
-                                ResultView(isWin: isWin)
-                                    .frame(width: 150, height: 75)
-                                    .offset(y: -75)
-                                    .transition(.move(edge: .top).combined(with: .opacity))
+                    CoinView(rotationDegrees: $rotationDegrees, showsFront: $showsFront)
+                        .padding(50)
+                        .onTapGesture {
+                            if !isSpinning && !hasSpun {
+                                spinCoin()
                             }
                         }
-                        
-                        RoundedRectangle(cornerRadius: 25)
-                            .fill(
-                                RadialGradient(gradient: Gradient(colors: [Color.black.opacity(0.5), Color.black.opacity(0)]), center: .center, startRadius: 0, endRadius: 70)
-                            )
-                            .frame(width: 150, height: 5)
+                    
+                    if showResult {
+                        ResultView(isWin: isWin)
+                            .offset(y: -65)
+                            .transition(.move(edge: .top).combined(with: .opacity))
                     }
                 }
                 
-                Spacer()
+                RoundedRectangle(cornerRadius: 25)
+                    .fill(
+                        RadialGradient(gradient: Gradient(colors: [Color.black.opacity(0.5), Color.black.opacity(0)]), center: .center, startRadius: 0, endRadius: 70)
+                    )
+                    .frame(width: 150, height: 5)
             }
         }
     }
@@ -90,9 +66,10 @@ struct SpinCoin: View {
         }
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-            showsFront = rotationDegrees.truncatingRemainder(dividingBy: 360) < 180
-            isSpinning = false
             isWin = Bool.random()
+            showsFront = !isWin
+            isSpinning = false
+            hasSpun = true
             
             withAnimation(.easeInOut(duration: 0.5)) {
                 showResult = true
@@ -138,7 +115,7 @@ struct ResultView: View {
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 10)
-                .fill(isWin ? Color(red: 0.1059, green: 0.7412, blue: 0.4431) : Color.red)
+                .fill(isWin ? Color.mint : Color.red)
             
             Text(isWin ? "YOU WON" : "YOU LOST")
                 .font(.system(size: 16, weight: .bold))

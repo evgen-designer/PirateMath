@@ -187,7 +187,7 @@ struct ContentView: View {
             
             Spacer()
             
-                    }
+        }
         .alert(isPresented: $viewModel.showStopGameAlert) {
             Alert(
                 title: Text("Exit game"),
@@ -306,32 +306,19 @@ struct ContentView: View {
                 .edgesIgnoringSafeArea(.all)
             
             VStack(spacing: 20) {
-                ZStack {
-                    Circle()
-                        .fill(
-                            RadialGradient(
-                                gradient: Gradient(colors: [.yellow, .orange]),
-                                center: .center,
-                                startRadius: 0,
-                                endRadius: 100
-                            )
-                        )
-                        .frame(width: 200, height: 200)
-                    
-                    Image(systemName: "star.fill")
-                        .resizable()
-                        .scaledToFit()
-                        .foregroundColor(.white)
-                        .frame(width: 100, height: 100)
-                }
-                
-                Text("Perfect Score!")
+                Text("Perfect score: Tap coin!")
                     .font(.title.bold())
-                    .foregroundColor(.white)
-                
-                Text("Congratulations! You answered all questions correctly!")
                     .multilineTextAlignment(.center)
                     .foregroundColor(.white)
+                    .padding()
+                
+                Text("Congratulations! You answered all questions correctly. Now try your luck by tapping the coin.")
+                    .multilineTextAlignment(.center)
+                    .foregroundColor(.white)
+                    .padding(.horizontal)
+                
+                SpinCoin()
+                    .padding(.top, -20)
                 
                 Button(action: {
                     showPerfectScorePopup = false
@@ -344,6 +331,7 @@ struct ContentView: View {
                         .background(Color(red: 0.1059, green: 0.7412, blue: 0.4431))
                         .cornerRadius(10)
                 }
+                .padding(.bottom, 20)
             }
             .padding()
             .background(Color.indigo)
