@@ -123,6 +123,38 @@ struct ContentView: View {
                     .shadow(radius: 5)
                 
                 VStack {
+                    HStack(alignment: .top) {
+                        Button(action: {
+                            viewModel.showStopGameAlert = true
+                        }) {
+                            Text("Exit game")
+                                .foregroundColor(.white)
+                        }
+                        
+                        Spacer()
+                        
+                        HStack(spacing: 10) {
+                            ZStack {
+                                Circle()
+                                    .fill(Color(red: 0.1059, green: 0.7412, blue: 0.4431))
+                                    .frame(width: 30, height: 30)
+                                Text("\(viewModel.score)")
+                                    .foregroundColor(.white)
+                                    .font(.system(size: 14, weight: .bold))
+                            }
+                            
+                            ZStack {
+                                Circle()
+                                    .fill(Color.red)
+                                    .frame(width: 30, height: 30)
+                                Text("\(viewModel.incorrectScore)")
+                                    .foregroundColor(.white)
+                                    .font(.system(size: 14, weight: .bold))
+                            }
+                        }
+                    }
+                    .padding(.horizontal, 30)
+                    
                     if let selectedTable = viewModel.selectedTable {
                         Image(imagesSelected[selectedTable - 1])
                             .resizable()
@@ -137,55 +169,25 @@ struct ContentView: View {
                     
                     Text(viewModel.userAnswer)
                         .font(.title2)
+                        .foregroundColor(.black)
                         .frame(width: 160, height: 50)
                         .background(backgroundColor)
                         .cornerRadius(10)
                 }
             }
             .padding()
+            .frame(height: 360)
+            
+            Spacer()
             
             NumberPad(enteredAmount: $viewModel.userAnswer) {
                 viewModel.checkAnswer()
             }
             .padding(.bottom)
             
-            Divider().background(Color.white)
-            
             Spacer()
             
-            HStack {
-                Button(action: {
-                    viewModel.showStopGameAlert = true
-                }) {
-                    Text("Exit game")
-                        .foregroundColor(.white)
-                }
-                
-                Spacer()
-                
-                HStack(spacing: 10) {
-                    ZStack {
-                        Circle()
-                            .fill(Color.mint)
-                            .frame(width: 30, height: 30)
-                        Text("\(viewModel.score)")
-                            .foregroundColor(.white)
-                            .font(.system(size: 14, weight: .bold))
                     }
-                    
-                    ZStack {
-                        Circle()
-                            .fill(Color.red)
-                            .frame(width: 30, height: 30)
-                        Text("\(viewModel.incorrectScore)")
-                            .foregroundColor(.white)
-                            .font(.system(size: 14, weight: .bold))
-                    }
-                }
-            }
-            .padding(.top)
-            .padding(.horizontal, 30)
-        }
         .alert(isPresented: $viewModel.showStopGameAlert) {
             Alert(
                 title: Text("Exit game"),
@@ -203,7 +205,7 @@ struct ContentView: View {
         case .neutral:
             return Color.white.opacity(0.4)
         case .correct:
-            return Color.mint
+            return Color(red: 0.1059, green: 0.7412, blue: 0.4431)
         case .incorrect:
             return Color.red
         }
@@ -246,7 +248,7 @@ struct ContentView: View {
                                 
                                 ZStack {
                                     Circle()
-                                        .fill(question.isCorrect ? Color.mint : Color.red)
+                                        .fill(question.isCorrect ? Color(red: 0.1059, green: 0.7412, blue: 0.4431) : Color.red)
                                         .frame(width: 24, height: 24)
                                     Image(systemName: question.isCorrect ? "checkmark" : "xmark")
                                         .foregroundColor(.white)
@@ -275,7 +277,7 @@ struct ContentView: View {
                     .foregroundColor(.white)
                     .padding()
                     .frame(minWidth: 200)
-                    .background(Color.mint)
+                    .background(Color(red: 0.1059, green: 0.7412, blue: 0.4431))
                     .cornerRadius(10)
             }
             .padding(.horizontal)
@@ -339,7 +341,7 @@ struct ContentView: View {
                         .foregroundColor(.white)
                         .padding()
                         .frame(minWidth: 100)
-                        .background(Color.mint)
+                        .background(Color(red: 0.1059, green: 0.7412, blue: 0.4431))
                         .cornerRadius(10)
                 }
             }

@@ -77,7 +77,7 @@ struct SubmitButton: View {
             Image(systemName: "checkmark")
                 .font(.title)
                 .frame(width: 70, height: 70)
-                .background(isDisabled ? Color.gray : Color.mint)
+                .background(Color(red: 0.1059, green: 0.7412, blue: 0.4431))
                 .foregroundColor(.white)
                 .cornerRadius(35)
         }

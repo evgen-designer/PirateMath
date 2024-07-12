@@ -138,7 +138,7 @@ struct ResultView: View {
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 10)
-                .fill(isWin ? Color.mint : Color.red)
+                .fill(isWin ? Color(red: 0.1059, green: 0.7412, blue: 0.4431) : Color.red)
             
             Text(isWin ? "YOU WON" : "YOU LOST")
                 .font(.system(size: 16, weight: .bold))
